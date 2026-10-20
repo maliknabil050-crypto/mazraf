@@ -31,7 +31,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      padding-bottom: 90px;
+      padding-bottom: 120px; /* مساحة كافية للسلة الموسعة */
     }
 
     .hub-container {
@@ -203,6 +203,7 @@
     }
     .add-to-cart-btn:hover { background: #b45309; }
 
+    /* سلة الطلبات العائمة الموسعة لاختيار الطاولة */
     .floating-cart {
       position: fixed;
       bottom: 15px;
@@ -212,19 +213,44 @@
       max-width: 400px;
       background: #1E1815;
       border: 2px solid var(--accent);
-      border-radius: 16px;
-      padding: 12px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      border-radius: 18px;
+      padding: 14px 16px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.9);
       z-index: 1000;
       animation: slideUp 0.3s ease;
+      text-align: right;
     }
 
-    .cart-info { text-align: right; }
-    .cart-info h4 { font-size: 0.85rem; color: #FFF; }
-    .cart-info p { font-size: 0.75rem; color: var(--accent-light); font-weight: bold; }
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 8px;
+    }
+    .cart-header h4 { font-size: 0.88rem; color: #FFF; }
+    .cart-header p { font-size: 0.82rem; color: var(--accent-light); font-weight: bold; }
+
+    .table-select-container {
+      margin-bottom: 10px;
+    }
+    .table-select-container label {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .table-select {
+      width: 100%;
+      background: #2D2420;
+      color: #FFF;
+      border: 1px solid var(--accent);
+      padding: 8px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      outline: none;
+    }
 
     .whatsapp-send-btn {
       background: #25D366;
@@ -233,12 +259,14 @@
       padding: 10px 16px;
       border-radius: 10px;
       font-weight: bold;
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       cursor: pointer;
       text-decoration: none;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
+      width: 100%;
     }
     .whatsapp-send-btn:hover { background: #20ba5a; }
 
@@ -535,7 +563,7 @@
     <div id="socialPanel" class="content-panel">
       <h3><span>📱 حسابات التواصل الاجتماعي</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
       <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 5px;">
-        <a href="https://instagram.com" target="_blank" class="action-link-btn" style="background: #E1306C;">تتابعنا على انستغرام</a>
+        <a href="https://instagram.com" target="_blank" class="action-link-btn" style="background: #E1306C;">تابعنا على انستغرام</a>
         <a href="https://tiktok.com" target="_blank" class="action-link-btn" style="background: #000000;">تابعنا على تيك توك</a>
       </div>
     </div>
@@ -553,14 +581,28 @@
     </div>
   </div>
 
-  <!-- سلة الطلبات العائمة -->
+  <!-- سلة الطلبات العائمة مع قائمة اختيار رقم الطاولة -->
   <div id="floatingCart" class="floating-cart" style="display: none;">
-    <div class="cart-info">
-      <h4 id="cartCount">0 منتجات في السلة</h4>
+    <div class="cart-header">
+      <h4>سلة الطلبات</h4>
       <p id="cartTotal">المجموع: 0 ر.س</p>
     </div>
+    
+    <div class="table-select-container">
+      <label for="tableNumber">حدد رقم الطاولة أو الموقع:</label>
+      <select id="tableNumber" class="table-select">
+        <option value="طاولة رقم 1">طاولة رقم 1</option>
+        <option value="طاولة رقم 2">طاولة رقم 2</option>
+        <option value="طاولة رقم 3">طاولة رقم 3</option>
+        <option value="طاولة رقم 4">طاولة رقم 4</option>
+        <option value="طاولة رقم 5">طاولة رقم 5</option>
+        <option value="الجلسة الخارجية">الجلسة الخارجية</option>
+        <option value="استلام من السيارة (Drive-thru)">استلام من السيارة (Drive-thru)</option>
+      </select>
+    </div>
+
     <button class="whatsapp-send-btn" onclick="sendToWhatsApp()">
-      <span>إرسال للواتساب</span> 💬
+      <span>إرسال الطلب للواتساب</span> 💬
     </button>
   </div>
 
@@ -590,16 +632,14 @@
 
     function updateCartUI() {
       const cartDiv = document.getElementById('floatingCart');
-      const cartCount = document.getElementById('cartCount');
       const cartTotal = document.getElementById('cartTotal');
 
       let totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
       let totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
 
       if (totalItems > 0) {
-        cartDiv.style.display = 'flex';
-        cartCount.innerText = `${totalItems} منتجات مختارة`;
-        cartTotal.innerText = `المجموع: ${totalPrice} ر.س`;
+        cartDiv.style.display = 'block';
+        cartTotal.innerText = `المجموع: ${totalPrice} ر.س (${totalItems} منتج)`;
       } else {
         cartDiv.style.display = 'none';
       }
@@ -608,7 +648,12 @@
     function sendToWhatsApp() {
       if (cart.length === 0) return;
 
-      let message = "مرحباً، أرغب في طلب المنتجات التالية من مقهى مزراف:☕\n\n";
+      const selectedTable = document.getElementById('tableNumber').value;
+
+      let message = `مرحباً، أرغب في طلب المنتجات التالية من مقهى مزراف:☕\n\n`;
+      message += `📍 *الموقع / الطاولة:* ${selectedTable}\n`;
+      message += `------------------------\n`;
+
       let totalPrice = 0;
 
       cart.forEach((item, index) => {
@@ -617,7 +662,8 @@
         message += `${index + 1}. ${item.name} (الكمية: ${item.qty}) - ${itemTotal} ر.س\n`;
       });
 
-      message += `\n💰 الإجمالي الكلي: ${totalPrice} ر.س\n\nأرجو تأكيد الطلب وشكراً لكم!`;
+      message += `------------------------\n`;
+      message += `💰 *الإجمالي الكلي:* ${totalPrice} ر.س\n\nأرجو تأكيد الطلب وشكراً لكم!`;
 
       let encodedMessage = encodeURIComponent(message);
       let whatsappURL = `https://wa.me/966569999699?text=${encodedMessage}`;
