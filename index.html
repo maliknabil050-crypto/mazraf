@@ -31,6 +31,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      padding-bottom: 90px;
     }
 
     .hub-container {
@@ -56,7 +57,6 @@
       margin-bottom: 12px;
     }
 
-    /* توسيط الشعار ليكون متناسقاً تماماً */
     .brand-logo-container {
       width: 85px;
       height: 85px;
@@ -167,14 +167,80 @@
     .menu-card {
       background: #261E1A;
       border: 1px solid #3A2E28;
-      padding: 10px 12px;
-      border-radius: 10px;
-      margin-bottom: 8px;
+      padding: 10px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .menu-card h4 { font-size: 0.9rem; color: #FFF; margin-bottom: 2px; }
-    .menu-card p { font-size: 0.78rem; color: var(--muted); margin-bottom: 6px; }
+    .item-img {
+      width: 55px;
+      height: 55px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--accent);
+      flex-shrink: 0;
+    }
+
+    .item-info { flex-grow: 1; }
+    .menu-card h4 { font-size: 0.85rem; color: #FFF; margin-bottom: 2px; }
+    .menu-card p { font-size: 0.72rem; color: var(--muted); margin-bottom: 4px; }
     .menu-card span { font-size: 0.8rem; color: var(--accent-light); font-weight: bold; }
+
+    .add-to-cart-btn {
+      background: var(--accent);
+      color: #FFF;
+      border: none;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: 0.2s;
+      flex-shrink: 0;
+    }
+    .add-to-cart-btn:hover { background: #b45309; }
+
+    .floating-cart {
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 400px;
+      background: #1E1815;
+      border: 2px solid var(--accent);
+      border-radius: 16px;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.9);
+      z-index: 1000;
+      animation: slideUp 0.3s ease;
+    }
+
+    .cart-info { text-align: right; }
+    .cart-info h4 { font-size: 0.85rem; color: #FFF; }
+    .cart-info p { font-size: 0.75rem; color: var(--accent-light); font-weight: bold; }
+
+    .whatsapp-send-btn {
+      background: #25D366;
+      color: #FFF;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .whatsapp-send-btn:hover { background: #20ba5a; }
 
     .action-link-btn {
       display: inline-block;
@@ -226,6 +292,10 @@
       from { opacity: 0; transform: translateY(5px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translate(-50%, 20px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
   </style>
 </head>
 <body>
@@ -233,7 +303,6 @@
   <div class="hub-container">
     <span class="badge">المنظومة الذكية ☕</span>
     
-    <!-- الشعار باسم logo.jpg ومتمركز تماماً -->
     <div class="brand-logo-container">
       <img src="logo.jpg" alt="شعار مقهى مزراف" class="brand-logo">
     </div>
@@ -246,7 +315,7 @@
     <div class="hub-links">
       <button class="hub-btn" onclick="showPanel('menuPanel')">
         <span class="icon">📜</span>
-        <span>استعراض المنيو (10 منتجات مختارة)</span>
+        <span>استعراض المنيو والطلب الفوري</span>
         <span class="arrow">←</span>
       </button>
 
@@ -275,71 +344,109 @@
       </button>
     </div>
 
-    <!-- 1. لوحة المنيو (10 منتجات) -->
+    <!-- 1. لوحة المنيو مع الصور -->
     <div id="menuPanel" class="content-panel">
-      <h3><span>📜 قائمة مزراف المختصة (10 منتجات)</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
+      <h3><span>📜 قائمة مزراف المختصة</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
       
       <div class="menu-card">
-        <h4>1. إسبريسو (Espresso)</h4>
-        <p>استخلاص غني بقوام متوازن</p>
-        <span>14 ر.س</span>
+        <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=150" alt="إسبريسو" class="item-img">
+        <div class="item-info">
+          <h4>إسبريسو (Espresso)</h4>
+          <p>استخلاص غني بقوام متوازن</p>
+          <span>14 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('إسبريسو', 14)">إضافة +</button>
       </div>
 
       <div class="menu-card">
-        <h4>2. الأمريكية (Americano)</h4>
-        <p>إسبريسو مضاف إليه الماء الساخن الفاخر</p>
-        <span>15 ر.س</span>
+        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=150" alt="أمريكية" class="item-img">
+        <div class="item-info">
+          <h4>الأمريكية (Americano)</h4>
+          <p>إسبريسو مع ماء ساخن فاخر</p>
+          <span>15 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('أمريكية', 15)">إضافة +</button>
       </div>
 
       <div class="menu-card">
-        <h4>3. كابتشينو (Cappuccino)</h4>
-        <p>إسبريسو مع رغوة حليب ناعمة وغنية</p>
-        <span>18 ر.س</span>
+        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=150" alt="كابتشينو" class="item-img">
+        <div class="item-info">
+          <h4>كابتشينو (Cappuccino)</h4>
+          <p>إسبريسو مع رغوة حليب ناعمة</p>
+          <span>18 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('كابتشينو', 18)">إضافة +</button>
       </div>
 
       <div class="menu-card">
-        <h4>4. لاتيه حار / بارد (Latte)</h4>
-        <p>مستخلصة بعناية مع الحليب المبخر</p>
-        <span>18 ر.س</span>
+        <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=150" alt="لاتيه" class="item-img">
+        <div class="item-info">
+          <h4>لاتيه حار / بارد (Latte)</h4>
+          <p>مستخلصة بعناية مع الحليب</p>
+          <span>18 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('لاتيه', 18)">إضافة +</button>
       </div>
 
       <div class="menu-card">
-        <h4>5. فلات وايت (Flat White)</h4>
-        <p>ميزان دقيق وقوي بين الإسبريسو والحليب</p>
-        <span>16 ر.س</span>
+        <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=150" alt="فلات وايت" class="item-img">
+        <div class="item-info">
+          <h4>فلات وايت (Flat White)</h4>
+          <p>ميزان دقيق بين الإسبريسو والحليب</p>
+          <span>16 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('فلات وايت', 16)">إضافة +</button>
       </div>
 
       <div class="menu-card">
-        <h4>6. في 60 - قهوة مقطرة (V60)</h4>
-        <p>محاصيل فاخرة مميزة للفلتر اليومي</p>
-        <span>22 ر.س</span>
+        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=150" alt="في 60" class="item-img">
+        <div class="item-info">
+          <h4>في 60 - قهوة مقطرة (V60)</h4>
+          <p>محاصيل فاخرة للفلتر اليومي</p>
+          <span>22 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('في 60', 22)">إضافة +</button>
       </div>
 
       <div class="menu-card">
-        <h4>7. اسبانيش لاتيه بارد (Spanish Latte)</h4>
-        <p>مزيج منعش من الإسبريسو والحليب والحلا الخاص</p>
-        <span>21 ر.س</span>
+        <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=150" alt="اسبانيش لاتيه" class="item-img">
+        <div class="item-info">
+          <h4>اسبانيش لاتيه بارد</h4>
+          <p>إسبريسو مع حليب والحلا الخاص</p>
+          <span>21 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('اسبانيش لاتيه', 21)">إضافة +</button>
       </div>
 
       <div class="menu-card">
-        <h4>8. موكا مثلجة (Iced Mocha)</h4>
-        <p>شوكولاتة بلجيكية فاخرة مع الإسبريسو والثلج</p>
-        <span>22 ر.س</span>
+        <img src="https://images.unsplash.com/photo-1530373239216-42518e6b4039?w=150" alt="موكا مثلجة" class="item-img">
+        <div class="item-info">
+          <h4>موكا مثلجة (Iced Mocha)</h4>
+          <p>شوكولاتة بلجيكية مع الإسبريسو</p>
+          <span>22 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('موكا مثلجة', 22)">إضافة +</button>
       </div>
 
       <div class="menu-card">
-        <h4>9. كيكة العسل الخاصة (Honey Cake)</h4>
-        <p>طازجة ومحضرة يومياً لتناسب قهوتك</p>
-        <span>24 ر.س</span>
+        <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=150" alt="كيكة العسل" class="item-img">
+        <div class="item-info">
+          <h4>كيكة العسل الخاصة</h4>
+          <p>طازجة ومحضرة يومياً</p>
+          <span>24 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('كيكة العسل', 24)">إضافة +</button>
       </div>
 
       <div class="menu-card">
-        <h4>10. تارت التوت الفاخر (Berry Tart)</h4>
-        <p>معجنات هشة محشوة بكريمة الفانيليا والتوت</p>
-        <span>20 ر.س</span>
+        <img src="https://images.unsplash.com/photo-1519869325930-281384150729?w=150" alt="تارت التوت" class="item-img">
+        <div class="item-info">
+          <h4>تارت التوت الفاخر</h4>
+          <p>معجنات هشة بكريمة الفانيليا</p>
+          <span>20 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('تارت التوت', 20)">إضافة +</button>
       </div>
-
-      <a href="https://wa.me/966569999699?text=مرحباً، أرغب في طلب بعض المنتجات من مقهى مزراف" target="_blank" class="action-link-btn">اطلب عبر الواتساب الآن</a>
     </div>
 
     <!-- 2. لوحة برنامج الولاء -->
@@ -370,16 +477,23 @@
     <div id="beansPanel" class="content-panel">
       <h3><span>🛍️ محاصيل مزراف للتحضير المنزلي</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
       <div class="menu-card">
-        <h4>محصول إثيوبيا قيديب (250g)</h4>
-        <p>إيحاءات فاكهية وزهرية واضحة للفلتر والإسبريسو</p>
-        <span>75 ر.س</span>
+        <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=150" alt="محصول إثيوبيا" class="item-img">
+        <div class="item-info">
+          <h4>محصول إثيوبيا قيديب (250g)</h4>
+          <p>إيحاءات فاكهية وزهرية</p>
+          <span>75 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('محصول إثيوبيا', 75)">إضافة +</button>
       </div>
       <div class="menu-card">
-        <h4>محصول كولومبي هائلا (250g)</h4>
-        <p>إيحاءات الشوكولاتة والكراميل الغنية</p>
-        <span>70 ر.س</span>
+        <img src="https://images.unsplash.com/photo-1611854779393-1b2da9d401fe?w=150" alt="محصول كولومبي" class="item-img">
+        <div class="item-info">
+          <h4>محصول كولومبي هائلا (250g)</h4>
+          <p>إيحاءات الشوكولاتة والكراميل</p>
+          <span>70 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('محصول كولومبي', 70)">إضافة +</button>
       </div>
-      <a href="https://wa.me/966569999699?text=أرغب بشراء حبوب القهوة والمحاصيل" target="_blank" class="action-link-btn">اطلب المحصول الآن</a>
     </div>
 
     <!-- 5. لوحة التواصل والموقع -->
@@ -395,7 +509,20 @@
     </div>
   </div>
 
+  <!-- سلة الطلبات العائمة -->
+  <div id="floatingCart" class="floating-cart" style="display: none;">
+    <div class="cart-info">
+      <h4 id="cartCount">0 منتجات في السلة</h4>
+      <p id="cartTotal">المجموع: 0 ر.س</p>
+    </div>
+    <button class="whatsapp-send-btn" onclick="sendToWhatsApp()">
+      <span>إرسال للواتساب</span> 💬
+    </button>
+  </div>
+
   <script>
+    let cart = [];
+
     function showPanel(panelId) {
       const panels = document.querySelectorAll('.content-panel');
       panels.forEach(panel => panel.classList.remove('active'));
@@ -405,6 +532,53 @@
     function closePanel() {
       const panels = document.querySelectorAll('.content-panel');
       panels.forEach(panel => panel.classList.remove('active'));
+    }
+
+    function addToCart(name, price) {
+      let existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ name: name, price: price, qty: 1 });
+      }
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const cartDiv = document.getElementById('floatingCart');
+      const cartCount = document.getElementById('cartCount');
+      const cartTotal = document.getElementById('cartTotal');
+
+      let totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+      let totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+      if (totalItems > 0) {
+        cartDiv.style.display = 'flex';
+        cartCount.innerText = `${totalItems} منتجات مختارة`;
+        cartTotal.innerText = `المجموع: ${totalPrice} ر.س`;
+      } else {
+        cartDiv.style.display = 'none';
+      }
+    }
+
+    function sendToWhatsApp() {
+      if (cart.length === 0) return;
+
+      let message = "مرحباً، أرغب في طلب المنتجات التالية من مقهى مزراف:☕\n\n";
+      let totalPrice = 0;
+
+      cart.forEach((item, index) => {
+        let itemTotal = item.price * item.qty;
+        totalPrice += itemTotal;
+        message += `${index + 1}. ${item.name} (الكمية: ${item.qty}) - ${itemTotal} ر.س\n`;
+      });
+
+      message += `\n💰 الإجمالي الكلي: ${totalPrice} ر.س\n\nأرجو تأكيد الطلب وشكراً لكم!`;
+
+      let encodedMessage = encodeURIComponent(message);
+      let whatsappURL = `https://wa.me/966569999699?text=${encodedMessage}`;
+      
+      window.open(whatsappURL, '_blank');
     }
 
     function rateCoffee(stars) {
