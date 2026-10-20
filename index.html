@@ -9,7 +9,7 @@
       --bg: #120F0D;
       --card-bg: #1E1815;
       --card-border: #2D2420;
-      --accent: #D97706; /* لون برونزي / قهوة دافئ */
+      --accent: #D97706;
       --accent-light: #FBBF24;
       --text: #F9FAFB;
       --muted: #9CA3AF;
@@ -56,14 +56,25 @@
       margin-bottom: 12px;
     }
 
-    .brand-logo {
-      width: 80px;
-      height: 80px;
+    /* توسيط الشعار ليكون متناسقاً تماماً */
+    .brand-logo-container {
+      width: 85px;
+      height: 85px;
+      margin: 0 auto 12px auto;
       border-radius: 50%;
-      object-fit: cover;
       border: 2px solid var(--accent);
-      margin-bottom: 10px;
+      overflow: hidden;
+      background-color: #FDFBF7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    .brand-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .hub-title {
@@ -87,7 +98,6 @@
       margin-bottom: 22px;
     }
 
-    /* أزرار القائمة الرئيسية */
     .hub-links {
       display: flex;
       flex-direction: column;
@@ -123,7 +133,6 @@
     .hub-btn span.arrow { color: var(--accent); font-size: 1rem; }
     .hub-btn:hover span.arrow { color: #FFF; }
 
-    /* لوحة المحتوى التفاعلي */
     .content-panel {
       display: none;
       background: #1A1412;
@@ -155,7 +164,6 @@
     }
     .close-btn:hover { color: #FFF; }
 
-    /* عناصر المنيو والخدمات */
     .menu-card {
       background: #261E1A;
       border: 1px solid #3A2E28;
@@ -183,7 +191,6 @@
     }
     .action-link-btn:hover { background: #b45309; }
 
-    /* صندوق التقييم */
     .staff-card {
       background: #261E1A;
       border: 1px solid #3A2E28;
@@ -226,8 +233,10 @@
   <div class="hub-container">
     <span class="badge">المنظومة الذكية ☕</span>
     
-    <!-- صورة الشعار (تأكد من تسمية ملف الصورة باسم logo.jpg ورفعه بجانب الكود) -->
-    <img src="logo.jpg" alt="شعار مقهى مزراف" class="brand-logo">
+    <!-- الشعار باسم logo.jpg ومتمركز تماماً -->
+    <div class="brand-logo-container">
+      <img src="logo.jpg" alt="شعار مقهى مزراف" class="brand-logo">
+    </div>
     
     <div class="hub-title">مقهى مزراف | Mazraf</div>
     <div class="logo-subtitle">تصميم: أيقونة مزراف التراثية العصرية</div>
@@ -237,7 +246,7 @@
     <div class="hub-links">
       <button class="hub-btn" onclick="showPanel('menuPanel')">
         <span class="icon">📜</span>
-        <span>استعراض المنيو (القهوة والحلا)</span>
+        <span>استعراض المنيو (10 منتجات مختارة)</span>
         <span class="arrow">←</span>
       </button>
 
@@ -266,31 +275,78 @@
       </button>
     </div>
 
-    <!-- 1. لوحة المنيو -->
+    <!-- 1. لوحة المنيو (10 منتجات) -->
     <div id="menuPanel" class="content-panel">
-      <h3><span>📜 قائمة مزراف المختصة</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
+      <h3><span>📜 قائمة مزراف المختصة (10 منتجات)</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
+      
       <div class="menu-card">
-        <h4>لاتيه حار / بارد (محاصيل فاخرة)</h4>
-        <p>مستخلصة بعناية من أجود حبوب البن</p>
+        <h4>1. إسبريسو (Espresso)</h4>
+        <p>استخلاص غني بقوام متوازن</p>
+        <span>14 ر.س</span>
+      </div>
+
+      <div class="menu-card">
+        <h4>2. الأمريكية (Americano)</h4>
+        <p>إسبريسو مضاف إليه الماء الساخن الفاخر</p>
+        <span>15 ر.س</span>
+      </div>
+
+      <div class="menu-card">
+        <h4>3. كابتشينو (Cappuccino)</h4>
+        <p>إسبريسو مع رغوة حليب ناعمة وغنية</p>
         <span>18 ر.س</span>
       </div>
+
       <div class="menu-card">
-        <h4>فلات وايت (Flat White)</h4>
-        <p>ميزان دقيق بين الإسبريسو والحليب المبخر</p>
+        <h4>4. لاتيه حار / بارد (Latte)</h4>
+        <p>مستخلصة بعناية مع الحليب المبخر</p>
+        <span>18 ر.س</span>
+      </div>
+
+      <div class="menu-card">
+        <h4>5. فلات وايت (Flat White)</h4>
+        <p>ميزان دقيق وقوي بين الإسبريسو والحليب</p>
         <span>16 ر.س</span>
       </div>
+
       <div class="menu-card">
-        <h4>كيكة العسل الخاصة</h4>
+        <h4>6. في 60 - قهوة مقطرة (V60)</h4>
+        <p>محاصيل فاخرة مميزة للفلتر اليومي</p>
+        <span>22 ر.س</span>
+      </div>
+
+      <div class="menu-card">
+        <h4>7. اسبانيش لاتيه بارد (Spanish Latte)</h4>
+        <p>مزيج منعش من الإسبريسو والحليب والحلا الخاص</p>
+        <span>21 ر.س</span>
+      </div>
+
+      <div class="menu-card">
+        <h4>8. موكا مثلجة (Iced Mocha)</h4>
+        <p>شوكولاتة بلجيكية فاخرة مع الإسبريسو والثلج</p>
+        <span>22 ر.س</span>
+      </div>
+
+      <div class="menu-card">
+        <h4>9. كيكة العسل الخاصة (Honey Cake)</h4>
         <p>طازجة ومحضرة يومياً لتناسب قهوتك</p>
         <span>24 ر.س</span>
       </div>
+
+      <div class="menu-card">
+        <h4>10. تارت التوت الفاخر (Berry Tart)</h4>
+        <p>معجنات هشة محشوة بكريمة الفانيليا والتوت</p>
+        <span>20 ر.س</span>
+      </div>
+
+      <a href="https://wa.me/966569999699?text=مرحباً، أرغب في طلب بعض المنتجات من مقهى مزراف" target="_blank" class="action-link-btn">اطلب عبر الواتساب الآن</a>
     </div>
 
     <!-- 2. لوحة برنامج الولاء -->
     <div id="loyaltyPanel" class="content-panel">
       <h3><span>⭐ بطاقة ولاء مزراف VIP</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
       <p style="font-size: 0.85rem; margin-bottom: 10px;">كل 6 أكواب قهوة تحصل على الكوب الـ 7 مجاناً! سجل رقمك وابدأ بجمع النقاط مع كل زيارة.</p>
-      <a href="#" class="action-link-btn" onclick="alert('تم تفعيل بطاقة الولاء بنجاح في متصفحك!')">سجل في بطاقة الولاء الرقمية</a>
+      <a href="https://wa.me/966569999699?text=أرغب بالتسجيل في برنامج ولاء مزراف" target="_blank" class="action-link-btn">سجل في بطاقة الولاء الرقمية</a>
     </div>
 
     <!-- 3. لوحة التقييم -->
@@ -318,14 +374,19 @@
         <p>إيحاءات فاكهية وزهرية واضحة للفلتر والإسبريسو</p>
         <span>75 ر.س</span>
       </div>
-      <a href="#" class="action-link-btn">اطلب المحصول الآن</a>
+      <div class="menu-card">
+        <h4>محصول كولومبي هائلا (250g)</h4>
+        <p>إيحاءات الشوكولاتة والكراميل الغنية</p>
+        <span>70 ر.س</span>
+      </div>
+      <a href="https://wa.me/966569999699?text=أرغب بشراء حبوب القهوة والمحاصيل" target="_blank" class="action-link-btn">اطلب المحصول الآن</a>
     </div>
 
     <!-- 5. لوحة التواصل والموقع -->
     <div id="contactPanel" class="content-panel">
       <h3><span>📍 الموقع وخدمة العملاء</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
       <p style="font-size: 0.85rem; margin-bottom: 10px;">نستقبلكم يومياً من الساعة 6 صباحاً حتى 12 منتصف الليل.</p>
-      <a href="https://wa.me/" target="_blank" class="action-link-btn">تواصل عبر واتساب المقهى</a>
+      <a href="https://wa.me/966569999699?text=مرحباً، لدي استفسار بخصوص مقهى مزراف" target="_blank" class="action-link-btn">تواصل عبر واتساب المقهى</a>
     </div>
 
     <div class="hub-footer">
