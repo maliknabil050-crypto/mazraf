@@ -319,6 +319,12 @@
         <span class="arrow">←</span>
       </button>
 
+      <button class="hub-btn" onclick="showPanel('offersPanel')">
+        <span class="icon">🎁</span>
+        <span>العروض الحصرية والخصومات</span>
+        <span class="arrow">←</span>
+      </button>
+
       <button class="hub-btn" onclick="showPanel('loyaltyPanel')">
         <span class="icon">⭐</span>
         <span>برنامج الولاء (اجمع نقاطك واكسب)</span>
@@ -331,9 +337,21 @@
         <span class="arrow">←</span>
       </button>
 
+      <button class="hub-btn" onclick="showPanel('googleRatePanel')">
+        <span class="icon">⭐</span>
+        <span>قيم المقهى على خرائط جوجل</span>
+        <span class="arrow">←</span>
+      </button>
+
       <button class="hub-btn" onclick="showPanel('beansPanel')">
         <span class="icon">🛍️</span>
         <span>شراء حبوب القهوة والمحاصيل</span>
+        <span class="arrow">←</span>
+      </button>
+
+      <button class="hub-btn" onclick="showPanel('socialPanel')">
+        <span class="icon">📱</span>
+        <span>حسابات التواصل الاجتماعي</span>
         <span class="arrow">←</span>
       </button>
 
@@ -449,6 +467,16 @@
       </div>
     </div>
 
+    <!-- لوحة العروض الحصرية -->
+    <div id="offersPanel" class="content-panel">
+      <h3><span>🎁 العروض الحصرية</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
+      <div class="menu-card" style="flex-direction: column; text-align: center; padding: 15px;">
+        <h4>عرض الصباح السعيد ☀️</h4>
+        <p>احصل على كوب قهوة ساخنة مع أي حلا بخصم 20% حتى الساعة 10 صباحاً.</p>
+        <a href="https://wa.me/966569999699?text=أرغب الاستفادة من عرض الصباح السعيد" target="_blank" class="action-link-btn" style="margin-top: 10px;">اطلب العرض الآن</a>
+      </div>
+    </div>
+
     <!-- 2. لوحة برنامج الولاء -->
     <div id="loyaltyPanel" class="content-panel">
       <h3><span>⭐ بطاقة ولاء مزراف VIP</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
@@ -456,12 +484,12 @@
       <a href="https://wa.me/966569999699?text=أرغب بالتسجيل في برنامج ولاء مزراف" target="_blank" class="action-link-btn">سجل في بطاقة الولاء الرقمية</a>
     </div>
 
-    <!-- 3. لوحة التقييم -->
+    <!-- 3. لوحة التقييم الشخصي للباريستا -->
     <div id="ratePanel" class="content-panel">
-      <h3><span>☕ تقييم التجربة</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
+      <h3><span>☕ تقييم الباريستا</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
       <div class="staff-card">
-        <h4>كيف كانت قهوتك اليوم في مزراف؟</h4>
-        <p>رأيك يهمنا لنقدم الأفضل دائماً</p>
+        <h4>كيف كانت خدمة الباريستا اليوم؟</h4>
+        <p>رأيك يهمنا لتطوير خدمة فريقنا</p>
         <div class="stars-container" id="starContainer">
           <span class="star" onclick="rateCoffee(1)">★</span>
           <span class="star" onclick="rateCoffee(2)">★</span>
@@ -471,6 +499,13 @@
         </div>
         <p id="rateMsg" style="font-size: 0.78rem; color: var(--accent-light); min-height: 18px;"></p>
       </div>
+    </div>
+
+    <!-- لوحة تقييم خرائط جوجل -->
+    <div id="googleRatePanel" class="content-panel">
+      <h3><span>⭐ تقييم المقهى على جوجل</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
+      <p style="font-size: 0.85rem; margin-bottom: 12px;">نعتز بخدمتكم، يسعدنا جداً تقييمكم لمقهى مزراف على خرائط جوجل لنستمر بالتميز!</p>
+      <a href="https://maps.google.com" target="_blank" class="action-link-btn">قيمنا على خرائط جوجل ➔</a>
     </div>
 
     <!-- 4. لوحة حبوب القهوة -->
@@ -493,6 +528,15 @@
           <span>70 ر.س</span>
         </div>
         <button class="add-to-cart-btn" onclick="addToCart('محصول كولومبي', 70)">إضافة +</button>
+      </div>
+    </div>
+
+    <!-- لوحة حسابات التواصل الاجتماعي -->
+    <div id="socialPanel" class="content-panel">
+      <h3><span>📱 حسابات التواصل الاجتماعي</span> <button class="close-btn" onclick="closePanel()">✕</button></h3>
+      <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 5px;">
+        <a href="https://instagram.com" target="_blank" class="action-link-btn" style="background: #E1306C;">تتابعنا على انستغرام</a>
+        <a href="https://tiktok.com" target="_blank" class="action-link-btn" style="background: #000000;">تابعنا على تيك توك</a>
       </div>
     </div>
 
