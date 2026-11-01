@@ -120,7 +120,7 @@
       margin-bottom: 16px;
     }
 
-    /* شاشة العرض الإعلانية الفاخرة (Showcase Slider) */
+    /* شاشة العرض الإعلانية السينمائية (Video Loop Showcase) */
     .ad-screen-container {
       position: relative;
       width: 100%;
@@ -141,7 +141,6 @@
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      text-decoration: none;
     }
 
     .ad-slide.active {
@@ -149,16 +148,18 @@
       z-index: 1;
     }
 
-    .ad-slide img {
+    .ad-slide img,
+    .ad-slide video {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       filter: brightness(0.85);
+      border-radius: 20px;
     }
 
-    /* أزرار التنقل الدائرية اليمين واليسار */
+    /* أزرار التنقل الدائرية */
     .slider-btn {
       position: absolute;
       top: 50%;
@@ -229,7 +230,7 @@
       transition: 0.2s;
     }
 
-    /* الخدمات الصامتة الفورية */
+    /* منظومة الخدمات الصامتة الفورية */
     .section-label {
       text-align: right;
       font-size: 0.8rem;
@@ -665,26 +666,35 @@
     <div class="logo-subtitle">أيقونة القهوة المختصة والضيافة الحديثة</div>
     <div class="hub-subtitle">تجربة ضيافة استثنائية بلمسة واحدة</div>
 
-    <!-- شاشة العرض الإعلانية الفاخرة (Showcase Slider) -->
+    <!-- شاشة العرض الإعلانية السينمائية (Video Loop Showcase) -->
     <div class="ad-screen-container">
       <!-- أزرار التنقل الدائرية -->
       <button class="slider-btn prev" onclick="moveSlide(-1)">❯</button>
       <button class="slider-btn next" onclick="moveSlide(1)">❮</button>
 
-      <!-- الشرائح الإعلانية -->
+      <!-- الشرائح الفيديوية التفاعلية -->
+      <!-- الشريحة 1: فيديو استخلاص القهوة المختصة -->
       <div class="ad-slide active">
-        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600" alt="محصول اليوم">
-        <span class="slider-caption-badge">🔥 تشكيلة محاصيل الموسم الفاخرة</span>
+        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600">
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-coffee-maker-pouring-fresh-coffee-into-a-cup-42861-large.mp4" type="video/mp4">
+        </video>
+        <span class="slider-caption-badge">🔥 استخلاص محاصيل اليوم الفاخرة</span>
       </div>
 
+      <!-- الشريحة 2: فيديو تبخير الحليب والرسم (Latte Art) -->
       <div class="ad-slide">
-        <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=600" alt="حلا الصباح">
-        <span class="slider-caption-badge">✨ كيكة العسل الطازجة يومياً</span>
+        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1534778101976-62847782c213?w=600">
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-barista-making-latte-art-in-a-coffee-shop-42862-large.mp4" type="video/mp4">
+        </video>
+        <span class="slider-caption-badge">✨ فلات وايت مزراف الخاص بخصم 15%</span>
       </div>
 
+      <!-- الشريحة 3: فيديو تحميص أو طحن حبوب البن -->
       <div class="ad-slide">
-        <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=600" alt="عرض الدفعة الثانية">
-        <span class="slider-caption-badge">⚡ اطلب كوبك الثاني بخصم 15%</span>
+        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600">
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-coffee-beans-falling-into-a-grinder-42863-large.mp4" type="video/mp4">
+        </video>
+        <span class="slider-caption-badge">🛍️ محاصيل الموسم للتحضير المنزلي</span>
       </div>
     </div>
 
@@ -1017,7 +1027,7 @@
       startAutoSlide();
     });
 
-    // التحكم في سلايدر شاشة العرض
+    // التحكم في سلايدر شاشة العرض الفيديوية
     let currentSlide = 0;
     let slideTimer;
 
@@ -1028,7 +1038,19 @@
       else currentSlide = index;
 
       slides.forEach((s, idx) => {
-        s.classList.toggle('active', idx === currentSlide);
+        const isActive = (idx === currentSlide);
+        s.classList.toggle('active', isActive);
+        
+        // تشغيل وإعادة الفيديو النشط وإيقاف البقية
+        const vid = s.querySelector('video');
+        if (vid) {
+          if (isActive) {
+            vid.currentTime = 0;
+            vid.play().catch(() => {});
+          } else {
+            vid.pause();
+          }
+        }
       });
     }
 
@@ -1041,7 +1063,7 @@
     function startAutoSlide() {
       slideTimer = setInterval(() => {
         showSlide(currentSlide + 1);
-      }, 5000);
+      }, 6000);
     }
 
     function showToast(text) {
