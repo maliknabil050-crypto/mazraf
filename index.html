@@ -117,7 +117,91 @@
     .hub-subtitle {
       font-size: 0.8rem;
       color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* شاشة العرض الإعلانية الفاخرة (Showcase Slider) */
+    .ad-screen-container {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      border-radius: 22px;
+      border: 2px solid var(--accent);
+      overflow: hidden;
       margin-bottom: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+      background: #000;
+    }
+
+    .ad-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .ad-slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .ad-slide img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85);
+    }
+
+    /* أزرار التنقل الدائرية اليمين واليسار */
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(18, 14, 12, 0.85);
+      border: 1px solid var(--accent);
+      color: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10;
+      transition: 0.2s;
+    }
+
+    .slider-btn:active {
+      transform: translateY(-50%) scale(0.9);
+      background: var(--accent);
+      color: #FFF;
+    }
+
+    .slider-btn.prev { right: 12px; }
+    .slider-btn.next { left: 12px; }
+
+    /* البادج السفلي للعنوان */
+    .slider-caption-badge {
+      position: relative;
+      z-index: 5;
+      background: rgba(27, 21, 18, 0.9);
+      border: 1px solid var(--accent);
+      color: #FFF;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
 
     /* شريط الواي فاي */
@@ -145,7 +229,7 @@
       transition: 0.2s;
     }
 
-    /* منظومة الخدمات الصامتة الفورية */
+    /* الخدمات الصامتة الفورية */
     .section-label {
       text-align: right;
       font-size: 0.8rem;
@@ -179,14 +263,8 @@
       outline: none;
     }
 
-    .concierge-btn .icon {
-      font-size: 1.25rem;
-    }
-
-    .concierge-btn span.label {
-      font-size: 0.68rem;
-      font-weight: 700;
-    }
+    .concierge-btn .icon { font-size: 1.25rem; }
+    .concierge-btn span.label { font-size: 0.68rem; font-weight: 700; }
 
     .concierge-btn:active {
       transform: scale(0.95);
@@ -222,16 +300,8 @@
       border-bottom-right-radius: 10px;
     }
 
-    .refill-info h4 {
-      font-size: 0.88rem;
-      color: #FFF;
-      margin-bottom: 2px;
-    }
-
-    .refill-info p {
-      font-size: 0.72rem;
-      color: var(--muted);
-    }
+    .refill-info h4 { font-size: 0.88rem; color: #FFF; margin-bottom: 2px; }
+    .refill-info p { font-size: 0.72rem; color: var(--muted); }
 
     .refill-btn {
       background: var(--accent);
@@ -378,10 +448,7 @@
       padding: 14px;
     }
 
-    .action-modal.active {
-      display: flex;
-      animation: fadeIn 0.2s ease;
-    }
+    .action-modal.active { display: flex; animation: fadeIn 0.2s ease; }
 
     .modal-box {
       width: 100%;
@@ -394,17 +461,8 @@
       animation: slideUp 0.25s ease;
     }
 
-    .modal-box h4 {
-      font-size: 1rem;
-      color: #FFF;
-      margin-bottom: 6px;
-    }
-
-    .modal-box p {
-      font-size: 0.76rem;
-      color: var(--muted);
-      margin-bottom: 14px;
-    }
+    .modal-box h4 { font-size: 1rem; color: #FFF; margin-bottom: 6px; }
+    .modal-box p { font-size: 0.76rem; color: var(--muted); margin-bottom: 14px; }
 
     .modal-options {
       display: flex;
@@ -489,11 +547,7 @@
       color: var(--muted);
     }
 
-    .cart-ctrls {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .cart-ctrls { display: flex; align-items: center; gap: 6px; }
 
     .ctrl-btn {
       background: #2E221B;
@@ -610,6 +664,29 @@
     <div class="hub-title">مقهى مزراف | Mazraf</div>
     <div class="logo-subtitle">أيقونة القهوة المختصة والضيافة الحديثة</div>
     <div class="hub-subtitle">تجربة ضيافة استثنائية بلمسة واحدة</div>
+
+    <!-- شاشة العرض الإعلانية الفاخرة (Showcase Slider) -->
+    <div class="ad-screen-container">
+      <!-- أزرار التنقل الدائرية -->
+      <button class="slider-btn prev" onclick="moveSlide(-1)">❯</button>
+      <button class="slider-btn next" onclick="moveSlide(1)">❮</button>
+
+      <!-- الشرائح الإعلانية -->
+      <div class="ad-slide active">
+        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600" alt="محصول اليوم">
+        <span class="slider-caption-badge">🔥 تشكيلة محاصيل الموسم الفاخرة</span>
+      </div>
+
+      <div class="ad-slide">
+        <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=600" alt="حلا الصباح">
+        <span class="slider-caption-badge">✨ كيكة العسل الطازجة يومياً</span>
+      </div>
+
+      <div class="ad-slide">
+        <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=600" alt="عرض الدفعة الثانية">
+        <span class="slider-caption-badge">⚡ اطلب كوبك الثاني بخصم 15%</span>
+      </div>
+    </div>
 
     <!-- نسخ الواي فاي السريع -->
     <div class="wifi-quick-box">
@@ -924,13 +1001,12 @@
   </div>
 
   <script>
-    // الرقم السابق
     const CAFE_PHONE = "966569999699";
     let cart = [];
     let activeTable = "طاولة رقم 1";
     let isCooldown = false;
 
-    // استخراج رقم الطاولة تلقائياً من رابط الـ NFC مثل: index.html?table=4
+    // استخراج رقم الطاولة تلقائياً من رابط الـ NFC
     window.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const tableParam = urlParams.get('table') || urlParams.get('t');
@@ -938,7 +1014,35 @@
         activeTable = `طاولة رقم ${tableParam}`;
         document.getElementById('currentTableText').innerText = activeTable;
       }
+      startAutoSlide();
     });
+
+    // التحكم في سلايدر شاشة العرض
+    let currentSlide = 0;
+    let slideTimer;
+
+    function showSlide(index) {
+      const slides = document.querySelectorAll('.ad-slide');
+      if (index >= slides.length) currentSlide = 0;
+      else if (index < 0) currentSlide = slides.length - 1;
+      else currentSlide = index;
+
+      slides.forEach((s, idx) => {
+        s.classList.toggle('active', idx === currentSlide);
+      });
+    }
+
+    function moveSlide(step) {
+      clearInterval(slideTimer);
+      showSlide(currentSlide + step);
+      startAutoSlide();
+    }
+
+    function startAutoSlide() {
+      slideTimer = setInterval(() => {
+        showSlide(currentSlide + 1);
+      }, 5000);
+    }
 
     function showToast(text) {
       const toast = document.getElementById('toast');
